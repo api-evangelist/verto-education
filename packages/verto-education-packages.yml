@@ -1,0 +1,44 @@
+generated: '2026-09-02'
+method: searched
+source: https://registry.npmjs.org/
+name: Verto Education Packages
+description: >-
+  Searched the public registries for a first-party Verto Education client library.
+  There is none, on any registry, and this is consistent with the rest of the profile:
+  Verto ships a machine endpoint but no developer programme around it.
+package_count: 0
+packages: []
+registries_searched:
+- registry: npm
+  queries:
+  - verto-education
+  - vertoeducation
+  - verto education
+  result: >-
+    No first-party package. `verto` exists on npm but is an unrelated project, as are
+    `vertojs` and `@xswitch/rtc` (FreeSWITCH Verto WebRTC signalling, a different Verto).
+    None reference vertoeducation.org.
+- registry: PyPI
+  queries:
+  - verto-education
+  result: 404 - no package.
+- registry: RubyGems
+  result: No first-party package found.
+- registry: Packagist
+  result: >-
+    No first-party package found. Worth noting because the surface is WordPress - a
+    Composer-distributed plugin would be the natural place for one, and there is not one.
+- registry: crates.io / NuGet / Maven Central / pkg.go.dev
+  result: No first-party package found.
+- registry: cdn
+  result: No pinned or unpinned first-party CDN build referenced from the site.
+source_code:
+  github_org: https://github.com/VertoEducation
+  github_org_status: >-
+    The org exists (created 2021-11-18) but has 0 public repositories and no name,
+    description, blog URL or email set, so it cannot be confirmed as the company's and
+    carries nothing. No GitHubOrganization pointer is emitted on this evidence.
+sdk_note: >-
+  No official SDK, so no SDKs pointer. Any client for the MCP endpoint is a generic MCP
+  client, not a Verto-published library.
+checked: '2026-09-02'

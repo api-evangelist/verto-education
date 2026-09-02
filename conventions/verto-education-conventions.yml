@@ -1,0 +1,84 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/.well-known/oauth-protected-resource
+name: Verto Education API Conventions
+description: >-
+  Cross-cutting runtime semantics for Verto Education's single machine surface. Verto
+  publishes no developer documentation, so every field below is either observed on the
+  wire or explicitly marked unknown. There is no idempotency support, no pagination
+  contract, no rate-limit signalling and no request-id tracing to record - and saying
+  so plainly is the point of this file.
+auth:
+  style: OAuth 2.0 Bearer (authorization_code + PKCE S256)
+  header: 'Authorization: Bearer <token>'
+  scopes:
+  - mcp
+  discovery: /.well-known/oauth-protected-resource -> /.well-known/oauth-authorization-server
+  see: authentication/verto-education-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No Idempotency-Key header is documented or advertised, and it could not be tested
+    against a gated endpoint. No Idempotency pointer is emitted.
+pagination:
+  style: unknown
+  note: >-
+    The underlying WordPress REST API conventionally uses page/per_page with X-WP-Total
+    and X-WP-TotalPages headers, but this host returns 401 before any collection is
+    reachable, so nothing is confirmed. Recorded as unknown rather than assumed.
+versioning:
+  style: path segment
+  observed: /wp-json/wp/v2/ for core routes; /wp-json/mcp/ for the MCP namespace
+  policy_published: false
+  note: >-
+    The namespace/version segment is a WordPress platform convention, not a versioning
+    policy Verto states. No deprecation or sunset policy is published.
+error_envelope:
+  format: wordpress-rest
+  shape: '{"code": string, "message": string, "data": {"status": int}}'
+  rfc9457: false
+  see: errors/verto-education-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: null
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After headers observed on any response, and
+    no limits documented. See rate-limits/verto-education-rate-limits.yml.
+request_id_tracing:
+  supported: unknown
+  note: >-
+    Responses pass through Cloudflare and carry cf-ray, which is an edge trace
+    identifier rather than a provider-issued request id. No provider request-id header
+    observed.
+field_expansion: null
+sparse_fieldsets: null
+metadata: null
+dry_run_mode:
+  supported: na
+  note: No public write surface to rehearse against.
+reversibility:
+  state: na
+  reason: >-
+    Verto exposes no public write surface. The only machine endpoint is an OAuth-gated
+    MCP server whose tool list returns 401 anonymously, so it cannot be established that
+    any write operation exists, let alone whether it can be undone. Reversibility,
+    dry_run_mode and idempotency are all `na` here - an honest not-applicable rather
+    than a zero.
+  operations: []
+  business_reversibility_note: >-
+    Verto does publish a human payment cancellation and refund policy at
+    https://vertoeducation.org/payment-cancellation-refund-policy/ (HTTP 200). That is a
+    commercial policy governing student enrollments, not an API reversal operation, and
+    it is recorded here only so a reader does not mistake its absence above for an
+    unexamined gap. It is deliberately NOT graded as API reversibility and no window is
+    asserted from it.
+cross_links:
+  errors: errors/verto-education-problem-types.yml
+  lifecycle: lifecycle/verto-education-lifecycle.yml
+  authentication: authentication/verto-education-authentication.yml
+  rate_limits: rate-limits/verto-education-rate-limits.yml
+  scopes: scopes/verto-education-scopes.yml
+checked: '2026-09-02'

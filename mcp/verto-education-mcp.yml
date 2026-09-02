@@ -1,0 +1,81 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/.well-known/oauth-protected-resource
+name: Verto Education MCP Server
+description: >-
+  Verto Education serves a remote Model Context Protocol endpoint from its own
+  WordPress installation at https://vertoeducation.org/wp-json/mcp/mcp-oauth-server.
+  It was discovered from the RFC 9728 protected-resource document at
+  /.well-known/oauth-protected-resource, which names that exact URL as the protected
+  resource and declares the single scope `mcp`. The endpoint is real and reachable -
+  it answers, and it answers with an authorization challenge rather than a 404 - but
+  every JSON-RPC method is gated: POST tools/list and POST initialize both return
+  HTTP 401 {"code":"rest_not_logged_in"}. The tool list and its inputSchemas therefore
+  cannot be enumerated anonymously and are NOT recorded here. Nothing below is derived
+  or guessed; the tools array is deliberately empty.
+deployment:
+  mode: remote
+  endpoint: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+transport: streamable-http
+authorization:
+  scheme: OAuth 2.1 / RFC 9728 protected resource
+  protected_resource_metadata: https://vertoeducation.org/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://vertoeducation.org/.well-known/oauth-authorization-server
+  issuer: https://vertoeducation.org
+  authorization_endpoint: https://vertoeducation.org/oauth/authorize
+  token_endpoint: https://vertoeducation.org/oauth/token
+  revocation_endpoint: https://vertoeducation.org/oauth/revoke
+  scopes:
+  - mcp
+  pkce: S256
+  bearer_methods_supported:
+  - header
+  dynamic_client_registration: >-
+    No RFC 7591 registration_endpoint is advertised. The authorization server instead
+    sets client_id_metadata_document_supported true, so clients identify themselves by
+    a client-id metadata document URL.
+tools: []
+tools_note: >-
+  Auth-gated. `POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}` with
+  Accept: application/json, text/event-stream returned HTTP 401
+  {"code":"rest_not_logged_in","message":"You are not currently logged in.","data":{"status":401}}.
+  The live schemas require an authenticated OAuth introspection pass. Verto publishes no
+  MCP tool reference in its docs and no llms.txt tool list, so there is no unauthenticated
+  fallback source for names or descriptions either.
+provenance:
+  platform: >-
+    The endpoint lives under /wp-json/, the WordPress REST API namespace, which places
+    this server in the WordPress MCP/Abilities adapter family rather than a bespoke
+    build. The whole WordPress REST API on this host is login-gated: /wp-json,
+    /wp-json/wp/v2, /wp-json/wp/v2/posts and /?rest_route=/ all return the same 401.
+  ownership: >-
+    Served from vertoeducation.org, the company's own primary domain, and the
+    authorization server metadata declares issuer https://vertoeducation.org. No
+    third-party or sibling-brand host is involved.
+x-evidence:
+- url: https://vertoeducation.org/.well-known/oauth-protected-resource
+  method: GET
+  http_status: 200
+  note: 301 to the trailing-slash form, then 200 application/json.
+- url: https://vertoeducation.org/.well-known/oauth-authorization-server
+  method: GET
+  http_status: 200
+- url: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  method: POST tools/list
+  http_status: 401
+- url: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  method: POST initialize
+  http_status: 401
+- url: https://vertoeducation.org/oauth/authorize
+  method: GET
+  http_status: 400
+  note: Live endpoint rejecting a parameterless request - not a 404.
+- url: https://vertoeducation.org/oauth/token
+  method: GET
+  http_status: 405
+  note: Method not allowed - POST-only token endpoint, so the route exists.
+checked: '2026-09-02'

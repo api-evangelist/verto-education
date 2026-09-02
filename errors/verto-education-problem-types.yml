@@ -1,0 +1,59 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/wp-json/
+name: Verto Education Error Catalog
+description: >-
+  Verto publishes no OpenAPI and no error reference, so this catalog holds only error
+  shapes actually observed on the wire during discovery. It is deliberately short:
+  every anonymous call into the machine surface returns the same authorization error,
+  because the whole surface is gated. Nothing here is extrapolated from the WordPress
+  or MCP error vocabulary in general - only what this host returned.
+format: wordpress-rest
+format_note: >-
+  Not RFC 9457. The envelope is the WordPress REST error object
+  {"code": <string>, "message": <human string>, "data": {"status": <int>}} served as
+  application/json, not application/problem+json. An agent parsing for `type`/`title`/
+  `detail` will find none of them; the machine-actionable key is `code`.
+envelope:
+  content_type: application/json
+  fields:
+  - name: code
+    type: string
+    description: Machine-readable error slug. The field to branch on.
+  - name: message
+    type: string
+    description: Human-readable sentence. Not stable, not localized.
+  - name: data.status
+    type: integer
+    description: Repeats the HTTP status code inside the body.
+problem_types:
+- code: rest_not_logged_in
+  http_status: 401
+  title: You are not currently logged in.
+  observed_on:
+  - https://vertoeducation.org/wp-json/
+  - https://vertoeducation.org/wp-json/wp/v2
+  - https://vertoeducation.org/wp-json/wp/v2/posts
+  - https://vertoeducation.org/wp-json/wp/v2/types
+  - https://vertoeducation.org/?rest_route=/
+  - https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  remediation: >-
+    Obtain an OAuth 2.0 access token from https://vertoeducation.org/oauth/token
+    (authorization_code + PKCE S256, scope `mcp`) and present it as an
+    Authorization: Bearer header. The 401 carries no WWW-Authenticate challenge, so a
+    client cannot discover the authorization server from the response itself - it must
+    read /.well-known/oauth-protected-resource.
+  note: >-
+    Returned identically for every path under /wp-json/, including the MCP endpoint and
+    including JSON-RPC POSTs. It is an origin-wide gate, not a per-route permission.
+coverage_note: >-
+  4xx/5xx shapes beyond this one cannot be enumerated without credentials. No 4xx
+  response taxonomy, error code reference, or retry guidance is published.
+x-evidence:
+- url: https://vertoeducation.org/wp-json/
+  http_status: 401
+  body: '{"code":"rest_not_logged_in","message":"You are not currently logged in.","data":{"status":401}}'
+- url: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  http_status: 401
+  method: POST tools/list
+checked: '2026-09-02'

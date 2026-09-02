@@ -1,0 +1,108 @@
+generated: '2026-09-02'
+method: searched
+source: https://vertoeducation.org/abroad-locations/
+name: Verto Education Plans and Pricing
+description: >-
+  Verto Education sells semester study-abroad programs, not API access. There are no
+  API plans, tiers, quotas or overages of any kind - the MCP endpoint the company
+  serves is not a commercial product and carries no published price. What Verto does
+  publish, and publishes well, is a per-location program price for each of its five
+  destinations, stated on that location's own page. Those are recorded below verbatim
+  so the profile reflects the company's real commercial surface rather than an empty
+  file, and they are clearly marked as program tuition.
+api_plans:
+  plan_count: 0
+  plans: []
+  note: >-
+    No API pricing page, no developer plans, no free tier, no metered rate. Probes:
+    /pricing 404, /tuition 404, /cost 404. The company's FAQ explicitly routes cost
+    questions to the individual location pages.
+program_pricing:
+  kind: program tuition (not API pricing)
+  currency: USD
+  period: per semester
+  terms_quoted: Fall 2026 and Spring 2027
+  qualifier: >-
+    Each figure is the published program cost before scholarships or grants. Verto states
+    on the Buenos Aires page that roughly half of participants receive scholarship or
+    institutional aid.
+  plan_count: 5
+  plans:
+  - name: Buenos Aires, Argentina
+    price: 18750
+    currency: USD
+    period: semester
+    term: Fall '26 & Spring '27
+    source: https://vertoeducation.org/abroad-locations/study-abroad-buenos-aires/
+    includes: accommodations, meals at homestays only, scheduled activities and excursions,
+      course materials, travel medical insurance, airport pickup, 24/7 emergency assistance
+    excludes: international airfare, visa and passport fees, public transportation
+    personal_expenses_guidance: 700-900 USD per month
+  - name: Prague, Czech Republic
+    price: 19750
+    currency: USD
+    period: semester
+    term: Fall '26 & Spring '27
+    source: https://vertoeducation.org/abroad-locations/study-abroad-prague/
+    add_ons:
+    - name: Meal plan (Fall '26)
+      price: 1550
+      currency: USD
+      note: 30,000 CZK prepaid meal card, price includes a 94 USD admin fee
+    - name: Meal plan (Spring '27)
+      price: 1350
+      currency: USD
+      note: 26,000 CZK prepaid meal card, price includes an 82 USD admin fee
+    personal_expenses_guidance: 600-800 USD per month
+  - name: Seville, Spain
+    price: 22500
+    currency: USD
+    period: semester
+    term: Fall '26 & Spring '27
+    source: https://vertoeducation.org/abroad-locations/study-abroad-spain/
+    includes: accommodations, meals, program events, excursions, books, course materials,
+      travel medical insurance, airport pickup, 24/7 emergency assistance
+    excludes: international airfare, visa fees, passport fees, public transportation
+    personal_expenses_guidance: 500-700 USD per month
+  - name: Florence, Italy
+    price: 25500
+    currency: USD
+    period: semester
+    term: Fall '26 & Spring '27
+    source: https://vertoeducation.org/abroad-locations/study-abroad-florence/
+    add_ons:
+    - name: Meal plan
+      price: 1500
+      currency: USD
+      note: EUR 1,125 prepaid meal card, price includes a 112 USD admin fee
+    personal_expenses_guidance: 800-1200 USD per month
+  - name: London, England
+    price: 33500
+    currency: USD
+    period: semester
+    term: Fall '26 & Spring '27
+    source: https://vertoeducation.org/abroad-locations/study-abroad-london-england/
+    add_ons:
+    - name: Meal plan
+      price: 2675
+      currency: USD
+      note: breakfast and dinner Monday-Friday plus Sunday night dinner
+    personal_expenses_guidance: 800-1200 USD per month
+  forward_terms: >-
+    The Prague and Seville pages both state that Fall '27 and Spring '28 program costs
+    are "available soon" - those terms are unpriced as of this check.
+  payment:
+    plans_offered: true
+    note: >-
+      Verto's FAQ states payment plans are offered and that deadlines vary by location,
+      directing enquiries to billing@vertoeducation.org. Published third-party coverage
+      describes a lump sum or five equal interest-free monthly payments; that split is
+      NOT stated on Verto's own pages and is therefore not recorded as a Verto figure.
+    refund_policy: https://vertoeducation.org/payment-cancellation-refund-policy/
+machine_readable_pricing: false
+machine_readable_note: >-
+  Prices are rendered in page copy only. There is no pricing or catalog endpoint, no
+  JSON-LD Offer/Course markup exposing them, and the site's own llms.txt does not list
+  the location pages' prices - so an agent must scrape five separate HTML pages to
+  answer "what does Verto cost".
+checked: '2026-09-02'

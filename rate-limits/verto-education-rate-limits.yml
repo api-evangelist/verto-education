@@ -1,0 +1,31 @@
+generated: '2026-09-02'
+method: searched
+source: https://vertoeducation.org/
+name: Verto Education Rate Limits
+description: >-
+  Verto Education documents no rate limits anywhere, and none could be observed: every
+  anonymous request to the machine surface is rejected with 401 before any quota
+  accounting would apply. This is an honest zero, recorded so the absence is legible.
+limit_count: 0
+limits: []
+response_headers: []
+status_on_exhaustion: null
+retry_after: null
+notes: >-
+  No X-RateLimit-*, RateLimit-* (RFC 9331 draft) or Retry-After headers were present on
+  any response from vertoeducation.org, including the 401s from /wp-json/ and the MCP
+  endpoint and the 200s from /llms.txt and the two well-known documents. The origin sits
+  behind Cloudflare, so an undocumented edge rate limit may exist that only shows up
+  under load; nothing about it is advertised to a client in advance. An agent has no way
+  to pace itself against this API except by backing off on failure.
+edge:
+  provider: Cloudflare
+  note: Observed from the 'server' response header, which reports cloudflare.
+x-evidence:
+- url: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  http_status: 401
+  rate_limit_headers: none
+- url: https://vertoeducation.org/llms.txt
+  http_status: 200
+  rate_limit_headers: none
+checked: '2026-09-02'

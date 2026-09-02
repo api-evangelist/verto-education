@@ -1,0 +1,81 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/.well-known/oauth-authorization-server
+name: Verto Education Authentication
+description: >-
+  Verto Education exposes exactly one authenticated machine surface: the remote MCP
+  endpoint at https://vertoeducation.org/wp-json/mcp/mcp-oauth-server, fronted by an
+  OAuth 2.0 authorization server on the same origin. This profile is read directly
+  from the two live discovery documents (RFC 8414 and RFC 9728), not from an OpenAPI
+  securityScheme - Verto publishes no OpenAPI. There is no public developer portal,
+  no API key programme, and no documented auth page; everything recorded here was
+  established by probe.
+schemes:
+- id: oauth2
+  type: oauth2
+  scheme: OAuth 2.0 authorization code with PKCE
+  in: header
+  bearer_format: Bearer
+  flows:
+    authorization_code:
+      authorization_url: https://vertoeducation.org/oauth/authorize
+      token_url: https://vertoeducation.org/oauth/token
+      revocation_url: https://vertoeducation.org/oauth/revoke
+      refresh_url: https://vertoeducation.org/oauth/token
+      pkce_required: true
+      pkce_methods:
+      - S256
+      scopes:
+        mcp: >-
+          The only scope the authorization server advertises. Its exact grant surface
+          is not documented by the provider; it gates the MCP endpoint named in the
+          protected-resource metadata.
+  grant_types:
+  - authorization_code
+  - refresh_token
+  response_types:
+  - code
+  client_authentication:
+  - none
+  client_authentication_note: >-
+    token_endpoint_auth_methods_supported is ["none"], i.e. public clients only. There
+    is no client_secret_basic or client_secret_post, and no RFC 7591 dynamic client
+    registration endpoint is advertised; the server sets
+    client_id_metadata_document_supported true instead, so a client is identified by a
+    URL pointing at its own metadata document.
+  applies_to:
+  - https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+- id: wordpress-rest-session
+  type: http
+  scheme: cookie/session (WordPress)
+  applies_to:
+  - https://vertoeducation.org/wp-json/
+  note: >-
+    The entire WordPress REST API on this host is closed to anonymous callers. /wp-json,
+    /wp-json/wp/v2, /wp-json/wp/v2/posts and /?rest_route=/ each return HTTP 401
+    {"code":"rest_not_logged_in"}. This is a deliberate hardening choice, not a
+    misconfiguration, and it means no anonymous content API exists here.
+openid_connect: false
+openid_connect_note: >-
+  /.well-known/openid-configuration returns the WordPress 404 template. The server is
+  a bare OAuth 2.0 authorization server, not an OIDC provider - no id_token, no userinfo
+  endpoint, no jwks_uri advertised.
+mtls: false
+api_keys: false
+docs: null
+docs_note: >-
+  Verto publishes no authentication documentation. The auth surface is discoverable only
+  from the machine-readable metadata documents, which is unusually good machine
+  discoverability paired with zero human documentation.
+x-evidence:
+- url: https://vertoeducation.org/.well-known/oauth-authorization-server
+  http_status: 200
+- url: https://vertoeducation.org/.well-known/oauth-protected-resource
+  http_status: 200
+- url: https://vertoeducation.org/.well-known/openid-configuration
+  http_status: 404
+- url: https://vertoeducation.org/wp-json/
+  http_status: 401
+- url: https://vertoeducation.org/oauth/token
+  http_status: 405
+checked: '2026-09-02'

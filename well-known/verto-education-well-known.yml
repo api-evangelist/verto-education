@@ -1,0 +1,56 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/.well-known/
+name: Verto Education Well-Known Documents
+description: >-
+  Probe of the RFC 8615 well-known namespace on the single host Verto Education
+  operates (vertoeducation.org, a WordPress site behind Cloudflare). Two documents
+  are served and both belong to the same thing: the OAuth 2.0 authorization server
+  and protected-resource metadata that front the site's remote MCP endpoint at
+  /wp-json/mcp/mcp-oauth-server. No security.txt, api-catalog, openid-configuration,
+  ai-plugin.json or agent card is served.
+hosts:
+- host: vertoeducation.org
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: verto-education-oauth-authorization-server.json
+    note: >-
+      RFC 8414 authorization server metadata. Served at the trailing-slash form
+      (/.well-known/oauth-authorization-server 301s to
+      /.well-known/oauth-authorization-server/). issuer https://vertoeducation.org,
+      PKCE S256 required, scopes_supported ["mcp"], token_endpoint_auth_methods_supported
+      ["none"] (public clients), client_id_metadata_document_supported true.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: verto-education-oauth-protected-resource.json
+    note: >-
+      RFC 9728 protected resource metadata. Names the MCP endpoint
+      https://vertoeducation.org/wp-json/mcp/mcp-oauth-server as the protected
+      resource, bearer_methods_supported ["header"], scopes_supported ["mcp"].
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+    note: Nginx 404 (not the WordPress 404 template) - no RFC 9116 file served.
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+    note: WordPress 404 page. The site runs bare OAuth 2.0, not OpenID Connect.
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+    note: WordPress 404 HTML template, not an A2A agent card. No AgentCard pointer emitted.
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+    note: Legacy pre-0.3 A2A path. WordPress 404 HTML template.
+  - path: /.well-known/mcp.json
+    status: 404
+    file: null
+checked: '2026-09-02'

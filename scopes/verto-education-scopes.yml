@@ -1,0 +1,34 @@
+generated: '2026-09-02'
+method: probed
+source: https://vertoeducation.org/.well-known/oauth-authorization-server
+name: Verto Education OAuth Scopes
+description: >-
+  The complete scope surface Verto Education's authorization server advertises. Both
+  discovery documents agree and both list exactly one scope. There is no published
+  scopes or permissions reference page to enrich this from - the metadata document is
+  the only source, and it is the authoritative one.
+authorization_server: https://vertoeducation.org
+scope_count: 1
+scopes:
+- name: mcp
+  description: >-
+    Grants access to the Model Context Protocol endpoint at
+    https://vertoeducation.org/wp-json/mcp/mcp-oauth-server. The server declares no
+    finer-grained read/write split - a token either carries `mcp` or it reaches nothing.
+  resource: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  source: scopes_supported in RFC 8414 metadata and RFC 9728 protected-resource metadata
+  documented_by_provider: false
+docs: null
+docs_note: >-
+  No human-readable scopes/permissions reference is published. Searched the site and
+  its llms.txt page inventory; the developer surface is entirely undocumented in prose.
+granularity_note: >-
+  A single coarse scope over a whole MCP tool surface means a consenting user cannot
+  grant an agent partial access. What `mcp` actually authorises cannot be established
+  anonymously because tools/list is itself gated (HTTP 401).
+x-evidence:
+- url: https://vertoeducation.org/.well-known/oauth-authorization-server
+  http_status: 200
+- url: https://vertoeducation.org/.well-known/oauth-protected-resource
+  http_status: 200
+checked: '2026-09-02'

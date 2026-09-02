@@ -1,0 +1,56 @@
+generated: '2026-09-02'
+method: searched
+source: https://vertoeducation.org/
+name: Verto Education Lifecycle
+description: >-
+  Operational lifecycle posture. Searched for a status page, changelog, versioning
+  policy, deprecation policy and SLA across the site, its sitemap index and its
+  llms.txt page inventory. None exist. No StatusPage or Deprecation pointer is emitted,
+  because emitting one would assert a surface the provider does not serve.
+versioning:
+  scheme: path namespace (WordPress platform convention)
+  current_version: wp/v2 core namespace; mcp namespace for the MCP endpoint
+  policy_published: false
+  policy_url: null
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No RFC 8594 Sunset or Deprecation headers observed, and no deprecation policy page
+    exists. Nothing to derive from an OpenAPI - there is none.
+status_page:
+  present: false
+  url: null
+  probes:
+  - url: https://vertoeducation.org/status
+    status: 404
+  - host: status.vertoeducation.org
+    status: NXDOMAIN
+changelog:
+  present: false
+  url: null
+  probes:
+  - url: https://vertoeducation.org/changelog
+    status: 404
+  note: >-
+    The company runs a marketing/student blog at https://vertoeducation.org/blog/ with
+    an RSS feed, but it is editorial content about study-abroad programs, not a dated
+    product or API changelog.
+roadmap:
+  present: false
+  probes:
+  - url: https://vertoeducation.org/roadmap
+    status: 404
+sla:
+  published: false
+  url: null
+support:
+  channel: https://vertoeducation.org/getinfo/
+  note: >-
+    Human enquiry form and a billing email (billing@vertoeducation.org, published on the
+    FAQ page). No developer support channel, forum or community.
+checked: '2026-09-02'

@@ -1,23 +1,115 @@
 aid: verto-education
 name: Verto Education
-description: 'Verto Education is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Verto Education is a US study-abroad provider, founded in 2017, that sells a first
+  year of college taken overseas. Students spend one, two or three semesters in Buenos
+  Aires, Prague, London, Florence or Seville, earn up to 16 US-transferable credits per
+  semester through academic provider the University of New Haven, and transfer into one
+  of 60+ partner colleges, in some cases with guaranteed admission. Verto runs no
+  developer programme and publishes no OpenAPI, documentation portal or SDK. It does,
+  however, serve a real agent surface from its own domain: a remote Model Context
+  Protocol endpoint at /wp-json/mcp/mcp-oauth-server, discoverable through RFC 9728
+  protected-resource metadata and fronted by an OAuth 2.0 authorization server with
+  PKCE, plus a Yoast-generated llms.txt. The MCP endpoint is live but OAuth-gated -
+  tools/list returns 401 anonymously - so its tool schemas cannot be enumerated without
+  credentials.
 url: https://raw.githubusercontent.com/api-evangelist/verto-education/refs/heads/main/apis.yml
+image: https://vertoeducation.org/wp-content/uploads/VE-website-social-share-photos-HOMEPAGE.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
-apis: []
+- Education
+- Higher Education
+- Study Abroad
+- College Admissions
+- Students
+- Travel
+- Model Context Protocol
+- OAuth
+- Agents
+apis:
+- aid: verto-education-mcp
+  name: Verto Education MCP Server
+  description: >-
+    A remote Model Context Protocol endpoint served from Verto Education's own
+    WordPress installation and advertised through RFC 9728 protected-resource metadata.
+    Access requires an OAuth 2.0 access token carrying the single scope `mcp`; every
+    anonymous JSON-RPC call returns HTTP 401, so the tool list and its input schemas
+    are not publicly enumerable. No REST contract, OpenAPI or documentation accompanies
+    it.
+  humanURL: https://vertoeducation.org/
+  baseURL: https://vertoeducation.org/wp-json/mcp/mcp-oauth-server
+  tags:
+  - Model Context Protocol
+  - Agents
+  - OAuth
+  properties:
+  - type: MCPServer
+    url: mcp/verto-education-mcp.yml
+  - type: Authentication
+    url: authentication/verto-education-authentication.yml
+  - type: OAuthScopes
+    url: scopes/verto-education-scopes.yml
+  - type: ErrorCatalog
+    url: errors/verto-education-problem-types.yml
+  - type: Conventions
+    url: conventions/verto-education-conventions.yml
+  - type: RateLimits
+    url: rate-limits/verto-education-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/verto-education-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/verto-education_stock/
+  url: https://vertoeducation.org/
+- type: Blog
+  url: https://vertoeducation.org/blog/
+- type: BlogRSS
+  url: https://vertoeducation.org/blog/feed/
+- type: Support
+  url: https://vertoeducation.org/getinfo/
+- type: SignUp
+  url: https://vertoeducation.org/apply/
+- type: Pricing
+  url: https://vertoeducation.org/abroad-locations/
+- type: TermsOfService
+  url: https://vertoeducation.org/terms-of-service/
+- type: PrivacyPolicy
+  url: https://vertoeducation.org/privacy-policy/
+- type: MCPServer
+  url: mcp/verto-education-mcp.yml
+- type: LLMsTxt
+  url: llms/verto-education-llms.txt
+- type: WellKnown
+  url: well-known/verto-education-well-known.yml
+- type: Authentication
+  url: authentication/verto-education-authentication.yml
+- type: OAuthScopes
+  url: scopes/verto-education-scopes.yml
+- type: Conformance
+  url: conformance/verto-education-conformance.yml
+- type: ErrorCatalog
+  url: errors/verto-education-problem-types.yml
+- type: Conventions
+  url: conventions/verto-education-conventions.yml
+- type: Lifecycle
+  url: lifecycle/verto-education-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/verto-education-rate-limits.yml
+- type: Plans
+  url: plans/verto-education-plans-pricing.yml
+- type: Packages
+  url: packages/verto-education-packages.yml
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1
