@@ -70,6 +70,9 @@ apis:
     url: conventions/verto-education-conventions.yml
   - type: RateLimits
     url: rate-limits/verto-education-rate-limits.yml
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: mcp-plugin
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
